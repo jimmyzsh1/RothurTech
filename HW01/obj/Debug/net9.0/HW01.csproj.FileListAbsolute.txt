@@ -1,0 +1,14 @@
+H:\OneDrive\documents\job searching\RothurTech\CSharpHWs\HW01\bin\Debug\net9.0\HW01.exe
+H:\OneDrive\documents\job searching\RothurTech\CSharpHWs\HW01\bin\Debug\net9.0\HW01.deps.json
+H:\OneDrive\documents\job searching\RothurTech\CSharpHWs\HW01\bin\Debug\net9.0\HW01.runtimeconfig.json
+H:\OneDrive\documents\job searching\RothurTech\CSharpHWs\HW01\bin\Debug\net9.0\HW01.dll
+H:\OneDrive\documents\job searching\RothurTech\CSharpHWs\HW01\bin\Debug\net9.0\HW01.pdb
+H:\OneDrive\documents\job searching\RothurTech\CSharpHWs\HW01\obj\Debug\net9.0\HW01.GeneratedMSBuildEditorConfig.editorconfig
+H:\OneDrive\documents\job searching\RothurTech\CSharpHWs\HW01\obj\Debug\net9.0\HW01.AssemblyInfoInputs.cache
+H:\OneDrive\documents\job searching\RothurTech\CSharpHWs\HW01\obj\Debug\net9.0\HW01.AssemblyInfo.cs
+H:\OneDrive\documents\job searching\RothurTech\CSharpHWs\HW01\obj\Debug\net9.0\HW01.csproj.CoreCompileInputs.cache
+H:\OneDrive\documents\job searching\RothurTech\CSharpHWs\HW01\obj\Debug\net9.0\HW01.dll
+H:\OneDrive\documents\job searching\RothurTech\CSharpHWs\HW01\obj\Debug\net9.0\refint\HW01.dll
+H:\OneDrive\documents\job searching\RothurTech\CSharpHWs\HW01\obj\Debug\net9.0\HW01.pdb
+H:\OneDrive\documents\job searching\RothurTech\CSharpHWs\HW01\obj\Debug\net9.0\HW01.genruntimeconfig.cache
+H:\OneDrive\documents\job searching\RothurTech\CSharpHWs\HW01\obj\Debug\net9.0\ref\HW01.dll
