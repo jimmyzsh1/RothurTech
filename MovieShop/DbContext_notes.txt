@@ -1,0 +1,102 @@
+DbContext
+DbSet
+DbSet
+DbSet
+DbSet
+
+Migration:
+Add-Migration; Update-Database
+
+select @@servername
+DESKTOP-3ARJA5B
+
+如果用的是一个老的框架
+.NET Framework
+那么配置文件是写在一个xml文件里的 app.config
+
+新的框架里一般都写在appsettings.json
+
+tools -> NuGetPackage Manager -> Package Manager Console，把Default Project改成Infrastructure，因为DbContext在那里
+
+接下来，在这个地方（PM>）运行Add-Migration InitialMigration（这个名字随便取），按回车, build started, build succeeded
+
+下一步，PM> update-database, 回车
+
+然后到SSMS里面，刷新，就能看到Databases下面的MovieShop数据库了
+
+不要在SSMS里面直接修改数据库，要回去C#里改！
+
+用Data Annotations，其实是一种Attribute，C#里凡是[]里的都叫Attribute,例如[HttpGet]
+或者
+Fluent API（优先度比前者更高）
+
+然后PM> add-migration UpdatingGenreTable, update-database
+
+如想撤销，
+Update-Database -Migration <Migration Name>，比如
+Update-Database -Migration InitialMigration
+
+接下来创建Movie table
+对Movie里的实体进行定义，会使用另一种方式，Fluent API
+
+之后
+PM> add-migration CreatingMovieTable
+PM> update-database
+
+Trailer.cs里的        
+public Movie Movie { get; set; }
+是一个navigation property，导航属性
+
+用link查询movie的trailer是这样子——
+
+_dbContext.Trailer.Include(t => t.Movie).ToListAsync();
+
+PM> add-migration CreatingTrailerTable
+PM> update-database
+
+MovieGenre，属于junction table，因为movie和genre是多对多的关系
+先隐性，再显性创造
+
+PM> add-migration CreatingMovieGenreJunctionTable
+但是名字有点不太对，撤销掉
+PM> remove-migration
+再显式地创建这个交叉表
+再次 PM> add-migration CreatingMovieGenreJunctionTable
+报错，因为没有在MovieGenre表里面确立主键
+需要在MovieShopDbContext.cs里面，在OnModelCreating新增一行配置
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Movie>(ConfigureMovie);
+    modelBuilder.Entity<MovieGenre>(configureMovieGenre);——这一行
+}
+再在这个.cs里面定义这个configureMovieGenre方法
+private void ConfigureMovieGenre(EntityTypeBuilder<MovieGenre> builder)
+{
+    builder.ToTable("MovieGenre");
+    builder.HasKey(mg => new { mg.MovieId, mg.GenreId });
+    
+}
+
+重新运行 PM> add-migration CreatingMovieGenreJunctionTable
+
+---------------
+
+接下来是作业部分，自己完成剩下来的表
+
+已完成的：Genre, Movie, MovieGenre, Trailer
+
+---------------
+
+Role, User, UserRole
+
+尝试用data annotation，果然会造成kimi提到过的，column名、表名出现复数，跟预期不符
+用 PM> remove-migration 取消
+
+----------------
+
+Crew, MovieCrew
+
+----------------
+
+Review
+
