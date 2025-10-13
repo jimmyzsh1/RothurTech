@@ -100,3 +100,50 @@ Crew, MovieCrew
 
 Review
 
+----------------
+
+Purchase
+
+----------------
+
+Favorites
+
+----------------
+
+20251005，如何用repository访问数据库
+
+ApplicationCore -> Contracts ->Repository下创建接口IRepository.cs
+
+里面写CRUD
+
+去Infra里面的Repository文件夹，创建Repository.cs （实现类）
+
+创建interface IMovieRepository.cs
+
+==============
+
+20251005，讲增删查改中的查
+
+entity和model(viewmodel）的区别，前者是一张表，后者只是轻量的，前端所需要看到的一部分
+
+---------------
+
+进入UI部分的开发
+
+partial view
+
+用bootstrap快速创建UI，比如movieCard就可以用bootstrap的card组件
+
+通常把partial view放在MVC - Views - Shared文件夹下
+
+通常在MVC - wwwrot - lib里面已经有bootstrap文件夹，已经安装好了
+
+先到views - Home - Index.cshtml里写基本布局
+
+要想清楚，电影的详情页，要放在哪个controller里面呢？
+不要全放在homecontroller，会变得过于拥挤，难以维护
+因为我们想要最终网页的url是这样子的： http://movieshop.com/movies/details/1
+新建MoviesController.cs
+
+右击Details方法，添加view，叫做Details.cshtml
+视图的名字要跟action的名字一致，系统就会自动匹配它们

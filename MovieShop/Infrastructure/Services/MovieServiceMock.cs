@@ -10,7 +10,9 @@ namespace Infrastructure.Services
 {
     public class MovieServiceMock : IMovieService
     {
-        public List<MovieCard> GetTop30GrossingMovies()
+
+
+        public List<MovieCard> Get30HighestGrossingMovies()
         {
             var movies = new List<MovieCard>
             {

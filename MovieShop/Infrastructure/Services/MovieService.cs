@@ -5,22 +5,28 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ApplicationCore.Contracts.Repositories;
 
 namespace Infrastructure.Services
 {
     public class MovieService : IMovieService
     {
-        public List<MovieCard> GetTop30GrossingMovies()
+        private readonly IMovieRepository _movieRepository;
+
+        public MovieService(IMovieRepository movieRepository)
         {
-            var movies = new List<MovieCard>
+            _movieRepository = movieRepository;
+        }
+        public List<MovieCard> Get30HighestGrossingMovies()
+        {
+            var movies = _movieRepository.Get30HighestGrossingMovies();
+            var movieCards = new List<MovieCard>();
+
+            foreach (var movie in movieCards)
             {
-                new MovieCard { Title = "Inception", Id = 1, PosterUrl = "" },
-                new MovieCard { Title = "Interstellar", Id = 2, PosterUrl = "" },
-                new MovieCard { Title = "The Dark Knight", Id = 3, PosterUrl = ""},
-                new MovieCard { Title = "Deadpool", Id = 4, PosterUrl = ""},
-                new MovieCard { Title = "The Avengers", Id = 5, PosterUrl = ""}
+                movieCards.Add(new MovieCard { Id = movie.Id, Title = movie.Title, PosterUrl = movie.PosterUrl });
             };
-            return movies;
+            return movieCards;
         }
 
     }

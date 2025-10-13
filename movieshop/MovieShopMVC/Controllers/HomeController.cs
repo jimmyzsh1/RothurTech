@@ -40,7 +40,7 @@ namespace MovieShopMVC.Controllers
 
             //var MovieService = new MovieService();
             //var movies = MovieService.GetTop30GrossingMovies();
-            var movies = _movieService.GetTop30GrossingMovies();
+            var movies = _movieService.Get30HighestGrossingMovies();
             return View(movies);
         }
 
