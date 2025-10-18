@@ -147,3 +147,42 @@ partial view
 
 右击Details方法，添加view，叫做Details.cshtml
 视图的名字要跟action的名字一致，系统就会自动匹配它们
+
+asp-controller
+asp-action
+asp-route-id
+
+----------
+
+MovieGenre迁移不成功，有外键问题
+
+DBCC CHECKIDENT ('dbo.ParentTable', RESEED, 0);
+
+在Shared文件夹里add - view
+partial view命名规范——以下划线开头，例如 _MovieCard.cshtml
+把index.cshtml里的主件剪切黏贴进去
+在index.cshtml里调用这个partial view
+
+<partial name="" model="" />
+
+是时候重写每一张moviecard，例如https://localhost:7008/movies/Details/16
+
+重写infra - repositories - MovieRepository.cs
+
+需要不同表的信息，不仅仅是movies，还有genre、user等等，所以需要用Include / ThenInclude来代替sql里的join
+
+如果我们现在在sql里面
+
+SELECT m.*, mg.*
+FROM Movie m
+LEFT JOIN MovieGenre mg
+ON m.Id = mg.MovieId
+
+SELECT m.*, mg.*, g.*
+FROM Movie m
+Left JOIN MovieGenre mg ON m.Id = mg.MovieId
+Left JOIN Genre g ON mg.GenreId = g.Id
+--------------
+
+20251008，讲同步/异步
+synchronous asynchronous

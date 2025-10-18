@@ -1,3 +1,28 @@
-﻿<h2>
-    Movie Detail Page To Do
-</h2>
+﻿@model ApplicationCore.Models.MovieDetailModel;
+
+<h1>@Model.Title</h1>
+
+<h1>@Model.Overview</h1>
+
+<h2>Average Rating: @Model.AverageRating</h2>
+
+<h3>Cast</h3>
+<ul>
+    @foreach (var cast in Model.Casts)
+    {
+        <li>
+            <img src="@cast.ProfilePath" alt="@cast.Name" width="100" />
+            <strong>@cast.Name</strong> as <em>@cast.Character</em>
+        </li>
+    }
+</ul>
+
+<h3>Trailers</h3>
+<ul>
+    @foreach (var trailer in Model.Trailers)
+    {
+        <li>
+            <a href="@trailer.TrailerUrl" target="_blank">@trailer.Name</a>
+        </li>
+    }
+</ul>

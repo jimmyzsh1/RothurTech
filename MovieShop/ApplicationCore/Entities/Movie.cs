@@ -18,10 +18,10 @@ namespace ApplicationCore.Entities
         [MaxLength(256)]
         public string Title { get; set; }
 
-        public string Overview { get; set; }
+        public string? Overview { get; set; }
 
         [MaxLength(512)]
-        public string Tagline { get; set; }
+        public string? Tagline { get; set; }
 
         public decimal? Budget { get; set; }
 
@@ -29,22 +29,22 @@ namespace ApplicationCore.Entities
 
         [MaxLength(2084)]
 
-        public string ImdbUrl { get; set; }
+        public string? ImdbUrl { get; set; }
 
         [MaxLength(2084)]
 
-        public string TmdbUrl { get; set; }
+        public string? TmdbUrl { get; set; }
 
         [MaxLength(2084)]
 
-        public string PosterUrl { get; set; }
+        public string? PosterUrl { get; set; }
 
         [MaxLength(2084)]
-        public string BackdropUrl { get; set; }
+        public string? BackdropUrl { get; set; }
 
         [MaxLength(64)]
 
-        public string OriginalLanguage { get; set; }
+        public string? OriginalLanguage { get; set; }
 
         public DateTime? ReleaseDate { get; set; }
 
@@ -60,10 +60,10 @@ namespace ApplicationCore.Entities
         public DateTime? UpdatedDate { get; set; }
 
 
-        public string UpdatedBy { get; set; }
+        public string? UpdatedBy { get; set; }
 
 
-        public string CreatedBy { get; set; }
+        public string? CreatedBy { get; set; }
 
         public decimal? Rating { get; set; }    
 
