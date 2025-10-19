@@ -22,7 +22,7 @@ namespace MovieShopMVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
 
 
@@ -40,7 +40,7 @@ namespace MovieShopMVC.Controllers
 
             //var MovieService = new MovieService();
             //var movies = MovieService.GetTop30GrossingMovies();
-            var movies = _movieService.Get30HighestGrossingMovies();
+            var movies = await _movieService.Get30HighestGrossingMovies();
             return View(movies);
         }
 

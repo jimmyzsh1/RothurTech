@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Services
 {
-    public class MovieServiceMock : IMovieService
+    public class MovieServiceMock //: IMovieService
     {
 
 

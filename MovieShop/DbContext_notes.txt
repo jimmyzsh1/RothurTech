@@ -186,3 +186,106 @@ Left JOIN Genre g ON mg.GenreId = g.Id
 
 20251008，讲同步/异步
 synchronous asynchronous
+CPU-bound operations I/O-bound operations
+
+GET http://movieshop.com/movies/details/22
+thread pool: T1, T2, ..., T10
+503 Service Unavailable
+
+两种可能解决方法
+
+scale up vertically - 加强CPU, 内存etc
+vs
+scale out horizontally - 多买几台服务器
+但都不是治本
+
+async/await
+
+在MoviesController.cs 里面 MoviesController的Details方法里加上async关键字
+public async Task<IActionResult> Details(int id) //http://movieshop.com/movies/details/1
+{
+    var movieDetails = await _movieService.GetMovieDetails(id);
+
+    return View(movieDetails);
+}
+意思是，我会异步返回一个Task<IActionResult>，但是要等GetMovieDetails执行完才行
+await表示，后面的GetMovieDetails是一个耗时很长的事情，等这个做完了再去执行后面的return代码
+
+IMovieService.cs里面的GetMovieDetails的返回类型也要改为Task<MovieDetailModel>
+
+然后去MovieService，把对应的方法也同步更新
+
+去IRepository里面，把GetById等方法的返回值也加上Task
+
+    public interface IRepository <T> where T : class
+    {
+        Task<T> GetById(int id);
+        Task<IEnumerable<T>> GetAll();
+        Task<T> Add(T entity);
+        Task<T> Update(T entity);
+        Task<T> Delete(T entity);
+    }
+
+因为这些方法本质上都是I/O的工作，同步执行这些方法都有可能阻塞线程
+
+然后去Repository.cs的实现类里面做相应改动
+
+MovieRepository.cs里面，FirstOrDefault, Average这两个方法是同步方法，会阻塞线程
+所以不但要改方法签名，还要把里面的方法也改成异步
+
+（我现在的average rating计算是在MovieService.cs - movieDetails里的public MovieDetailModel GetMovieDetails(int id)，跟老师的不同！）
+
+ToList也是同步版本，也要改为ToListAsync
+
+========
+
+part2 
+
+http://movieshop.com/movies/genres/1
+
+只需要用到Movie MovieGenre两张表
+显示不了那么多，引入分页功能OFFSET/FETCH
+
+select m.id, m.posterUrl, m.title
+from dbo.Movie m
+join dbo.MovieGenre mg on m.id = mg.movieid
+where mg.genreID = 1
+ORDER BY m.Id --Order by is required for OFFSET/FETCH
+OFFSET 0 ROWS FETCH NEXT 30 ROWS ONLY;
+
+在第几页，需要跳过多少部电影 公式：(pageNumber - 1) * pageSize
+
+(2 - 1) * 30 = 30
+(3 - 1) * 30 = 60
+
+OFFSET 0 ROWS FETCH NEXT 30 ROWS ONLY; -- 这里改成
+OFFSET (@pageNumber - 1) * @pageSize ROWS FETCH NEXT @pageSize ROWS ONLY;
+
+skip(n) take(m)
+
+skip(0).take(30); --第一页，跳过0条，取30部电影
+skip(30).take(30) --第二页，跳过30条，取30条
+
+现在来实际上写这分页逻辑，从MoviesController开始
+
+http://movieshop.com/movies/genre/1?pageSize=30&pageNumber=2
+
+movieshop.com -- url
+movies -- controller
+genre -- action method
+
+去IMovieRepository定义一个方法GetMoviesByGenres
+
+    public class PagedResultSet<T> where T : class
+泛型，可以用在Movie上，可以用在User上，可以用在Review、MovieCard上etc
+
+回到IMovieRepository.cs，把这个方法的返回值写完
+        Task<PagedResultSet<Movie>> GetMoviesByGenres(int genreId, int pageSize = 30, int pageNumber = 1);
+
+再去MovieRepository实现这个方法
+
+去bootstrap pagination 拷贝Overview里面的代码，用在Genres.cshtml里面
+
+<a href="/Movies/Genres/X?pageNumber=1">1</a>
+
+asp-controller asp-action

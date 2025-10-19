@@ -17,9 +17,9 @@ namespace Infrastructure.Services
         {
             _movieRepository = movieRepository;
         }
-        public List<MovieCard> Get30HighestGrossingMovies()
+        public async Task<List<MovieCard>> Get30HighestGrossingMovies()
         {
-            var movies = _movieRepository.Get30HighestGrossingMovies();
+            var movies = await _movieRepository.Get30HighestGrossingMovies();
             var movieCards = new List<MovieCard>();
 
             foreach (var movie in movies)
@@ -29,9 +29,9 @@ namespace Infrastructure.Services
             return movieCards;
         }
 
-        public MovieDetailModel GetMovieDetails(int id)
+        public async Task<MovieDetailModel> GetMovieDetails(int id)
         {
-            var movie = _movieRepository.GetById(id);
+            var movie = await _movieRepository.GetById(id);
             var movieDetails = new MovieDetailModel
             {
                 id = movie.Id,
@@ -49,18 +49,18 @@ namespace Infrastructure.Services
                 RunTime = movie.RunTime,
                 Price = movie.Price,
                 Rating = movie.Rating,
+                AverageRating = Math.Round(movie.Rating?? 0, 1)
             };
 
             // calculate average rating
-            if (movie.Reviews != null && movie.Reviews.Count > 0)
-            {
-                movieDetails.AverageRating = Math.Round(movie.Reviews.Average(r => r.Rating), 1);
-            }
-            else
-            {
-                movieDetails.AverageRating = null;
-            }
-
+            //if (movie.Reviews != null && movie.Reviews.Count > 0)
+            //{
+            //    movieDetails.AverageRating = Math.Round(movie.Reviews.Average(r => r.Rating), 1);
+            //}
+            //else
+            //{
+            //    movieDetails.AverageRating = null;
+            //}
             movieDetails.Trailers = new List<TrailerModel>();
             foreach (var trailer in movie.Trailers)
             {
@@ -88,6 +88,24 @@ namespace Infrastructure.Services
             }
 
             return movieDetails;
+
+        }
+
+        public async Task<PagedResultSet<MovieCard>> GetMoviesByGenrePagination(int genreId, int pageSize = 30, int pageNumber = 1)
+        {
+            var pagedMovies = await _movieRepository.GetMoviesByGenres(genreId, pageSize, pageNumber);
+            var movieCards = new List<MovieCard>();
+            movieCards.AddRange(
+                pagedMovies.Data.Select(m => new MovieCard
+                {
+                    Id = m.Id,
+                    Title = m.Title,
+                    PosterUrl = m.PosterUrl
+                })
+            );
+            return new PagedResultSet<MovieCard>(movieCards, pageNumber, pagedMovies.PageSize, pagedMovies.Count);
+
+
 
         }
     }
