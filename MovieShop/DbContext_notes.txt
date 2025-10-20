@@ -286,6 +286,38 @@ genre -- action method
 
 去bootstrap pagination 拷贝Overview里面的代码，用在Genres.cshtml里面
 
-<a href="/Movies/Genres/X?pageNumber=1">1</a>
+<a href="/Movies/Genres/X?pageNumber=1">1</a>  --例如 /Movies?pageNumber=3
+
+<a class="page-link" asp-route-pageNumber="@i">@i</a>
+等价于（最终渲染）：
+<a class="page-link" href="?pageNumber=3">3</a>
+
 
 asp-controller asp-action
+
+==============
+
+20251009
+
+Authentication Authorization 认证和授权
+
+register 页面
+
+username
+Password
+
+First Name
+Last Name
+
+http://movieshop.com/account/register
+http://movieshop.com/account/login
+
+login
+
+在controller添加AccountController，在里面添加register和login的方法
+
+为了login需要创建新的viewmodel，LoginModel，还要RegisterModel
+
+可以记录username，但是对密码必须进行哈希处理
+
+还需要salt，在对密码进行哈希处理之前，再添加一个随机的string
