@@ -43,9 +43,30 @@ namespace Infrastructure.Services
             return true;
         }
 
-        public Task<bool> ValidateUser(string email, string password)
+        public async Task<UserInfoModel> ValidateUser(string email, string password)
         {
-            throw new NotImplementedException();
+            var user = await _userRepository.GetUserByEmail(email);
+            if (user == null)
+            {
+                throw new Exception("Email does not exist");
+            }
+            var hashedPassword = GetHashedPassword(password, user.Salt);
+            if (hashedPassword.Equals(user.HashedPassword))
+            {
+                var userInfo = new UserInfoModel
+                {
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    DateOfBirth = user.DateOfBirth.GetValueOrDefault()
+                };
+                return userInfo;
+            }
+            else
+            {
+                throw new Exception("Invalid credentials: Email & Password don't match");
+            }
         }
 
         private string GetRandomSalt()

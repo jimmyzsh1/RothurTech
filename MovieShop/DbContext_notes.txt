@@ -321,3 +321,74 @@ login
 可以记录username，但是对密码必须进行哈希处理
 
 还需要salt，在对密码进行哈希处理之前，再添加一个随机的string
+
+infrastructure右键， 安装Nuget KeyDerivation
+
+Hash passwords in ASP.NET Core
+
+byte[] salt = RandomNumberGenerator.GetBytes(128 / 8); // divide by 8 to convert bits to bytes
+Console.WriteLine($"Salt: {Convert.ToBase64String(salt)}");
+
+string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+    password: password!,
+    salt: salt,
+    prf: KeyDerivationPrf.HMACSHA256,
+    iterationCount: 100000,
+    numBytesRequested: 256 / 8));
+
+Console.WriteLine($"Hashed: {hashed}");
+
+============
+
+20251011
+
+实现login相关的逻辑
+
+在accountcontroller.cs里更新post的login方法
+
+实现AccountService.cs里面的ValidateUser方法
+
+https://localhost:7008/user/purchases
+
+https://localhost:7008/user/favorites
+
+创建user Controller，再实现purchase和favorite的action method
+
+假设一个场景:
+
+10:00 AM - logged on MovieShop website
+
+Cookie created and sent to Browser
+
+10:05 AM - visit purchases page
+
+10:05的时候，如何确认这个用户已经通过了登录认证呢？
+
+需要用到Cookie
+
+AccountService - validateUser的返回值要从bool改为别的
+
+core - model - 添加 UserInfoModel.cs
+
+要去program.cs里面配置cookie的认证方案
+
+中间件管道middleware pipeline，用来在ASP.NET CORE的请求管道中处理HTTP请求和HTTP响应的
+
+假设用户输入了url ： http://movieshop.com/home/index
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthentication();
+
+app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.Run();
+
+用户登录之后，先从HTTPCONTEXT里面取出用户的id，用这id查出该用户购买的电影，之后把得到的结果传给视图进行展示
