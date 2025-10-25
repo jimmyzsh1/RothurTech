@@ -392,3 +392,31 @@ app.MapControllerRoute(
 app.Run();
 
 用户登录之后，先从HTTPCONTEXT里面取出用户的id，用这id查出该用户购买的电影，之后把得到的结果传给视图进行展示
+
+==================
+
+20251012，修改layout文件
+Views - Shared - _Layout.cshtml
+
+container里面的RenderBody是一个占位符
+
+新建一个partial view，_LoginInfo.cshtml
+
+在MVC下面创建文件夹Services，在里面添加Interface ICurrentUser.cs，以及它的实现类CurrentUser.cs
+
+这里我们把接口和接口实现都放在MVC层，因为它们都是web层的东西
+
+IHttpContextAccessor，让我们在应用程序的任何地方，都能访问http上下文
+
+需要在_Layout里引用_LoginInfo
+
+到AccountController.cs里面实现logout方法
+
+data-val (val是validation)
+
+data-val-length
+
+data-val-required
+
+ModelState["field name"].AttemptedValue
+ModelState["field name"].Errors

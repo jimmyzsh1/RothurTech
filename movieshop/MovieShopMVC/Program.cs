@@ -5,6 +5,7 @@ using Infrastructure.Repositories;
 using Infrastructure.Services;             // ✅ MovieService
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using MovieShopMVC.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,9 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<IMovieService, MovieService>();
+//20251012，加上下面两行代码
+builder.Services.AddScoped<ICurrentUser, CurrentUser>();
+builder.Services.AddHttpContextAccessor();
 //builder.Services.AddScoped<IMovieService, MovieServiceMock>();
 
 builder.Services.AddDbContext<MovieShopDbContext>( options =>
