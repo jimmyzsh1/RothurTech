@@ -420,3 +420,55 @@ data-val-required
 
 ModelState["field name"].AttemptedValue
 ModelState["field name"].Errors
+
+ModelState.IsValid
+
+在Core创建Validators文件夹
+
+===================
+
+20251015，设立RESTFUL API
+
+http://api.movieshop.com/Get30HighestGrossingMovies
+
+API - application programming interface
+
+REST风格
+
+GET http://api.movieshop.com/details/1
+
+POST http://api.movieshop.com/account/login
+POST http://api.movieshop.com/account/register
+
+右击Solution MovieShop，创建新project - ASP.NET Core Web API
+
+API返回的不是view
+
+Ok(...)
+NotFound(...)
+BadRequest(...)
+
+右击API，set as startup project
+
+运行，就会进入localhost:7152/swagger/index.html
+
+在web API中，建议为每个action method都标注对应的Http attribute
+
+[HttpGet]
+[HttpPost]
+[HttpPut]
+[HttpDelete]
+
+Postman，一个常用的API测试工具
+
+/api/movies/1
+
+http://localhost:xxxx/api/movies/1
+
+/api/account/login
+/api/account/register
+
+{
+    "email": "kimi1@test.com",
+    "password": "123"
+}

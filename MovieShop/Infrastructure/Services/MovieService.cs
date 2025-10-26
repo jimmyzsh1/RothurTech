@@ -32,6 +32,12 @@ namespace Infrastructure.Services
         public async Task<MovieDetailModel> GetMovieDetails(int id)
         {
             var movie = await _movieRepository.GetById(id);
+
+            if (movie == null)
+            {
+                return null;
+            }
+
             var movieDetails = new MovieDetailModel
             {
                 id = movie.Id,
