@@ -472,3 +472,35 @@ http://localhost:xxxx/api/movies/1
     "email": "kimi1@test.com",
     "password": "123"
 }
+
+.NET岗位面试常见考点：C#, sql，API, MVC的面试题通常不多。
+这些年，优先构建API的架构是趋势，MVC和API都要掌握
+
+=================
+
+20251018
+
+今天学一种新的认证方式 json web token (JWT)，之前在MVC项目里面我们用cookie认证
+
+jwt.io
+
+JWT分3段，句号隔开。分别是header, payload, signature
+
+右击solution Movieshop，安装Nuget package, 搜索Tokens.jwt, 全部勾选，安装
+
+在appsettings.json里面设立privateKey，待会要用它生成secretKey
+
+在AccountController.cs里面在AccountController的构造函数里注入Iconfiguration的instance
+
+如果用token
+Authorization: Bearer <token>
+
+在API下面新增UserController.cs
+
+进入developer powershell(VS下面栏)
+ cd .\MovieShopAPI\
+ dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer --version 8.0.8
+
+安装这个，新版的会不兼容
+
+HTTP Interceptor
