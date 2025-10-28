@@ -24,7 +24,9 @@ namespace MovieShopMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-
+            int x = 1;
+            int y = 0;
+            int z = x / y;
 
             ViewBag.Title = "MovieShop Home Page Title";
             //ViewData["Title"] = "MovieShop Home Page Title";

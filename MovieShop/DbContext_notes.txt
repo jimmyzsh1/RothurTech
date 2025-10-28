@@ -504,3 +504,27 @@ Authorization: Bearer <token>
 安装这个，新版的会不兼容
 
 HTTP Interceptor
+
+===================
+
+20251018
+
+Custom Middleware & Logging
+
+优雅地处理异常
+
+UseDeveloperExceptionPage() --适合开发环境，不适合生产环境使用
+UseExceptionHandler("/Home/Error") --生产环境的错误处理中间件
+
+DivideByZeroException: Attempted to divide by zero.
+MovieShopMVC.Controllers.HomeController.Index() in HomeController.cs
++
+            int z = x / y; 
+
+-- 这种就是开发者的异常页面，会直接显示出错的源代码，在开发/测试环境里是没问题的，但是在生产环境则很危险！
+
+在企业级应用里，通常会对异常做更多处理，通常会把异常写在日志文件里面
+
+MVC - 新增文件夹Middlewares - 在里面添加Middleware class，叫 MovieShopExceptionMiddleware.cs
+
+用系统自带的ILogger保存异常的log
