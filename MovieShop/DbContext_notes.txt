@@ -528,3 +528,83 @@ MovieShopMVC.Controllers.HomeController.Index() in HomeController.cs
 MVC - 新增文件夹Middlewares - 在里面添加Middleware class，叫 MovieShopExceptionMiddleware.cs
 
 用系统自带的ILogger保存异常的log
+
+Ilogger，或者Serilog
+
+====================
+
+20251019
+
+前端项目
+
+安装Node.js
+
+进command prompt输入
+
+node --version
+npm --version
+
+确认nodejs有没有装好
+
+npm install -g @angular/cli
+
+安装angular的cli工具
+
+ng --version
+
+确认安装
+
+之前学的是MVC
+今天要学SPA  single page application
+
+公共模块
+认证模块
+用户模块
+管理模块
+
+懒加载 Lazy Loading
+
+AJAX
+js: fetch, XMLHttpRequest
+angular: HttpClient
+
+AngularJS --- Angular 1，到2015年
+Angular2+ --- 2016重写，到现在
+以TypeScript为主，而不是纯粹的JavaScript
+组件是Angular中最小的构造单元
+RxJS的响应式编程
+Angular CLI（命令行工具）
+
+TypeScript： 由微软在JavaScript基础上，加入了类型系统，让TypeScript变成了一个强类型语言
+浏览器不能直接运行TypeScript，只能运行JavaScript，所以
+.ts -> .js
+
+Ahead-Of-Time 机制
+
+主要使用工具是cmd
+
+H:\OneDrive\documents\job searching\RothurTech\project\Angular>ng new movieshopspa --no-standalone
+选第一个CSS，预渲染选No
+下一个zoneless也选no
+AI工具，先选no
+
+在VS Code里打开文件夹，打开view - terminal
+
+安装插件，在google doc里面有
+
+优先用cmd而不是powershell，后者有可能遇到权限问题
+
+ng serve --open
+
+app.ts -- 曾经叫做appcomponent.ts
+
+bootstrapModule -- 这里bootstrap是启动的意思，和之前学过的CSS框架里的bootstrap没有关系
+
+启动链：
+
+maints -> AppModule -> AppComponent -> app.html
+
+{{}} -- interpolation 插值
+
+ng g module movies/movies --flat 
+ng g module movies/movies --flat --dry-run  (尝试运行，并没有真正运行）

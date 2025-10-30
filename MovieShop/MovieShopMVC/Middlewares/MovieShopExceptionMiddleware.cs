@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using MovieShopMVC.Middlewares;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -9,10 +10,12 @@ namespace MovieShopMVC.Middlewares
     public class MovieShopExceptionMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger<MovieShopExceptionMiddleware> _logger;
 
-        public MovieShopExceptionMiddleware(RequestDelegate next)
+        public MovieShopExceptionMiddleware(RequestDelegate next, ILogger<MovieShopExceptionMiddleware> logger)
         {
             _next = next;
+            _logger = logger;
         }
 
         public async Task Invoke(HttpContext httpContext)
@@ -35,19 +38,52 @@ namespace MovieShopMVC.Middlewares
                     ? httpContext.User.Identity.Name : null
                     // Email, UserId, QueryString, Headers, etc
                 };
-            }
-            httpContext.Response.Redirect("/home/error");
 
-            return;
+                // 📝 拼接日志文本
+                var logText = $@"
+======== Exception Caught ========
+Time: {exceptionDetails.ExceptionDateTime}
+Path: {exceptionDetails.Path}
+Method: {exceptionDetails.HttpMethod}
+User: {exceptionDetails.User}
+Type: {exceptionDetails.ExceptionType}
+Message: {exceptionDetails.Message}
+StackTrace: {exceptionDetails.StackTrace}
+==================================
+";
+
+
+
+
+                // 📁 日志文件路径（log/error.log）
+                var logFilePath = Path.Combine(Directory.GetCurrentDirectory(), "log", "error.log");
+
+                // ✅ 确保log目录存在
+                var logDir = Path.GetDirectoryName(logFilePath);
+                if (!Directory.Exists(logDir))
+                {
+                    Directory.CreateDirectory(logDir);
+                }
+
+                // 🖊️ 将日志写入文件（追加模式）
+                await File.AppendAllTextAsync(logFilePath, logText);
+
+                // 🚨 你也可以继续重定向错误页面
+                httpContext.Response.Redirect("/home/error");
+
+                return;
+            }
         }
+
     }
 
-    // Extension method used to add the middleware to the HTTP request pipeline.
-    public static class MiddlewareExtensions
+}
+
+// Extension method used to add the middleware to the HTTP request pipeline.
+public static class MiddlewareExtensions
+{
+    public static IApplicationBuilder UseMovieShopExceptionMiddleware(this IApplicationBuilder builder)
     {
-        public static IApplicationBuilder UseMiddleware(this IApplicationBuilder builder)
-        {
-            return builder.UseMiddleware<MovieShopExceptionMiddleware>();
-        }
+        return builder.UseMiddleware<MovieShopExceptionMiddleware>();
     }
 }
