@@ -46,12 +46,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{56df62a4-05a3-4e5b-aa1a-99371ccfb997}"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -84,7 +80,7 @@
               "RelativeDocumentMoniker": "MovieShop\\MovieShopMVC\\Controllers\\HomeController.cs",
               "ToolTip": "H:\\OneDrive\\documents\\job searching\\RothurTech\\project\\movieshop\\MovieShop\\MovieShop\\MovieShopMVC\\Controllers\\HomeController.cs",
               "RelativeToolTip": "MovieShop\\MovieShopMVC\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAA+AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-06T16:17:23.135Z",
               "EditorCaption": ""

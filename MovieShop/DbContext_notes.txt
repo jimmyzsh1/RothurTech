@@ -606,5 +606,100 @@ maints -> AppModule -> AppComponent -> app.html
 
 {{}} -- interpolation 插值
 
+c = component 组件
+
 ng g module movies/movies --flat 
 ng g module movies/movies --flat --dry-run  (尝试运行，并没有真正运行）
+
+ng g c movies/movie-details --dry-run
+
+ng g c home
+
+ng g module core/core --flat
+
+ng g module shared/shared --flat
+
+==============
+
+20251022
+
+对比MVC和Angular，如何从后端拿数据
+
+MVC: Controller → Service → Repository
+Angular： Component → Service → HttpClient
+
+http://localhost:4200/home
+首先Angular会加载 AppModule
+然后AppModule会激活、渲染 HomeComponent
+然后在HomeComponent的主件里会调用 MovieService
+MovieService会使用HttpClient向后端API发起AJAX请求，然后API会返回一组电影的json数据，前端用model接收这份json数据，
+MovieService再把这数据返回给HomeComponent，Angular把数据和模版绑定之后，浏览器就会把页面渲染出来
+
+异步代码在C#和Angular的区别
+
+C#：
+
+async/await
+
+Angular:
+
+Observables --理解成一种数据流，比promise更强
+
+ng g s core/services/movie
+
+生成两个文件, movie.spec.ts是测试文件，先不管，movie.ts
+
+ng g s core/services/user
+
+ng g s core/services/account
+
+ng g s core/services/genre
+
+ng g s core/services/admin
+
+  GetMovieDetails(id: number) { // 在C#里会写 int id，类型和参数的顺序是反过来的
+  }
+
+到app-modue.ts里导入并注册httpclient module
+
+export interface MovieCardModel {
+
+Paste JSON as Code
+
+先在swagger复制json
+ctrl shift P， 输入Paste JSON as Code，再输入MovieCardModel，即可自动生成interface
+
+
+async/await: 可以用，但通常只适合处理单次返回的请求
+Observable：更通用，既能表示一次性Http响应，也能表示多次推送的数据流
+
+lifecycle hooks --生命周期钩子
+
+ngOnInit()  --一个主件初始化阶段就会触发的生命周期钩子
+
+容易混淆点：构造函数不属于Angular的生命周期
+
+构造函数：语言层面的概念
+生命周期：Angular框架层面的概念
+
+就好像.ToListAsync()不运行，就不会真正运行请求一样，.getTopGrossingMovies()后面必须加上.subscribe()
+——这种叫lazy execution，惰性执行
+
+selector:
+
+<app-home></app-home>  --写在app.html, 有点像MVC里的一个partial view
+
+想打开Angular的主页：在VSCODE里面进cmd，输入ng serve，出现主页地址http://localhost:4200/，复制黏贴到浏览器回车
+
+浏览器主页右键- inspect - console
+
+出错原因：
+前端运行在http://localhost:4200/
+后端运行在http://localhost:7030/
+
+解决方法：在后端开启一个机制CORS: Cross-Origin Resource Sharing
+
+bank.com          evil.com
+
+whitelist: partner.com
+
