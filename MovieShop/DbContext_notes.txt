@@ -703,3 +703,39 @@ bank.com          evil.com
 
 whitelist: partner.com
 
+===================
+
+COR & ROUTING INTRO
+
+CORS (Cross-Origin Resource Sharing）
+
+后端API - appsettings.json加入这一行   "spaUrl": "http://localhost:4200",
+
+然后API - program.cs加入
+
+app.UseCors(policy =>
+{
+    policy.WithOrigins(builder.Configuration["spaUrl"])
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials();
+});
+
+http://localhost:4200  -> Origin: http://localhost:4200
+
+http://localhost:7030/  -> Access-Control-Allow-Origin: http://localhost:4200
+
+https://localhost:7152/
+
+cmd - npm install bootstrap@5.3.7
+
+ng g c shared/components/movie-card  --创建movie-card的子组件
+
+
+Angular的directives:
+
+Structural directives: 结构型指令
+*ngIf, *ngFor
+
+Attribute Directive: 属性型指令
+[ngClass],[ngStyle]

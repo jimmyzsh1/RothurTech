@@ -49,6 +49,8 @@ else
     app.UseMovieShopExceptionMiddleware();
 }
 
+
+
     app.UseHttpsRedirection();
 app.UseStaticFiles();
 
