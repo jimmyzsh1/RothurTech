@@ -739,3 +739,58 @@ Structural directives: 结构型指令
 
 Attribute Directive: 属性型指令
 [ngClass],[ngStyle]
+
+==================
+
+2025102
+
+Routing
+
+lazy loading：建立在Modularization（模块化） + Routing之上
+
+ng g module account/account --routing --flat
+
+ng g module admin/admin --routing --flat
+
+ng g module user/user --routing --flat
+
+ng g c movies/cast-details
+
+ng g module movies/movies-routing --flat --module=movies
+
+每个功能都需要一个Shell Component（外壳组件）
+
+每个Shell Component里再放一个 <router-outlet/>
+
+ng g c movies/movies --flat    --先为movies创造外壳组件
+
+会在movies文件夹下多出4个文件：
+movies.css
+movies.html
+movies.spec.ts
+movies.ts
+
+在movies.html里面加上<router-outlet/>
+
+再对剩下来的几个模块重复上述操作——创造外壳组件，并在.html里加上<router-outlet/>
+
+ng g c account/account --flat
+
+ng g c admin/admin --flat
+
+ng g c user/user --flat
+
+再进入app-routing-module.ts配置lazy loading的路由逻辑
+
+
+如果：
+http://localhost:4200/movies/1            --> MovieDetailsComponent (id = 1)
+http://localhost:4200/movies/cast/1    --> CastDetailsComponent (id = 1)
+
+去movies-routing-module.ts加上
+
+const routes: Routes = [
+  {
+    path: '', component: Movies
+  }
+];
