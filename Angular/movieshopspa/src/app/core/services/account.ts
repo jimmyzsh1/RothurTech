@@ -20,5 +20,6 @@ export class Account {
   }
 
   logout() {
+    localStorage.removeItem('token');
   }
 }
