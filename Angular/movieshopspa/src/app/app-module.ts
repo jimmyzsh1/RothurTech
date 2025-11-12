@@ -6,6 +6,7 @@ import { App } from './app';
 import { Home } from './home/home';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared-module';
+import { CoreModule } from './core/core-module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { SharedModule } from './shared/shared-module';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    CoreModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners()
